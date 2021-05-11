@@ -45,6 +45,21 @@ body.onkeydown =  async (e) => {
 
 }
 
+const startRecBtn = document.querySelector('#startRecBtn')
+const stopRecBtn = document.querySelector('#stopRecBtn')
+startRecBtn.addEventListener('click',()=>{
+  if(!nowrecording ){
+    startRecording()
+       
+  }
+  
+})
+stopRecBtn.addEventListener('click',()=>{
+ 
+  if(nowrecording ){
+    stopRecording(recHolder[0])
+  } 
+})
 async function startRecording(){
   statusdiv.innerHTML= 'starting recording'
     const recorder = await recordAudio();
