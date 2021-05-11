@@ -31,11 +31,20 @@ const sleep = time => new Promise(resolve => setTimeout(resolve, time));
 const handleAction = async () => {
   const recorder = await recordAudio();
   const actionButton = document.getElementById('action');
-  actionButton.disabled = true;
+  // actionButton.disabled = true;
   recorder.start();
   await sleep(3000);
   const audio = await recorder.stop();
   audio.play();
   await sleep(3000);
-  actionButton.disabled = false;
+  // actionButton.disabled = false;
 }
+
+const body = document.querySelector('body');
+
+body.onkeydown = function(e) {
+  console.log('works')
+  handleAction()
+}
+
+  
