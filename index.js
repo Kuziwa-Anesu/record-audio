@@ -28,23 +28,25 @@ const recordAudio = () =>
 
 const sleep = time => new Promise(resolve => setTimeout(resolve, time));
 let nowrecording = false
-const handleAction = async () => {
-  const recorder = await recordAudio();
-  const actionButton = document.getElementById('action');
-  nowrecording = true;
-  recorder.start();
-  await sleep(3000);
-  const audio = await recorder.stop();
-  audio.play();
-  await sleep(3000);
-  nowrecording = false;
-}
+
 
 const body = document.querySelector('body');
-
-body.onkeydown = function(e) {
-  console.log('works')
-  handleAction()
+let recordings = []
+body.onkeydown =  async (e) => {
+  if(!nowrecording && e.code =='KeyR'){
+    console.log('starting recording')
+    const recorder = await recordAudio();
+    nowrecording = true;
+    recorder.start();
+    console.log('recording now')
+    await sleep(7000)
+    console.log('stopping recording..')
+    const audio = await recorder.stop();
+    recordings.push(audio)
+    audio.play();
+    console.log('now playing...')
+    nowrecording = false;
+  }
 }
 
   
