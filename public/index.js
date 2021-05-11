@@ -67,7 +67,7 @@ async function startRecording(){
     recHolder[0] = recorder
     nowrecording = true;
     recorder.start();
-    statusdiv.innerHTML= 'recording now press T to stop recording'
+    statusdiv.innerHTML= 'recording now 🔴 press T to stop recording'
 }
 
 async function stopRecording(recorder){
