@@ -1,3 +1,4 @@
+const recordingsHolder = document.querySelector('#recordings-holder')
 const recordAudio = () =>
   new Promise(async resolve => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -76,4 +77,19 @@ async function stopRecording(recorder){
   audio.play();
   statusdiv.innerHTML= 'now playing...'
   nowrecording = false;
+  sleep(300)
+  createHTMLelementforThisRecording()
 }
+
+function createHTMLelementforThisRecording(){  
+  let audioElement = document.createElement('button')
+  let indexOfThisRec = parseInt(recordings.length)-1
+  audioElement.onclick=() =>{recordings[indexOfThisRec].play()}
+  audioElement.innerText = `play recording ${indexOfThisRec}`
+  recordingsHolder.appendChild(audioElement)
+  recordingsHolder.appendChild(document.createElement('br'))
+}
+
+
+
+//  every time user finishes a recording you need to make a new button or like an html element that the user can use to play his recording again 
