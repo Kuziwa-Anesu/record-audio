@@ -36,18 +36,22 @@ let recordings = []
 let recHolder = []
 body.onkeydown =  async (e) => {
   if(!nowrecording && e.code =='KeyR'){
-    statusdiv.innerHTML= 'starting recording'
-    const recorder = await recordAudio();
-    recHolder[0] = recorder
-    nowrecording = true;
-    recorder.start();
-    statusdiv.innerHTML= 'recording now press T to stop recording'
+    startRecording()
        
   }
   if(nowrecording && e.code =='KeyT'){
     stopRecording(recHolder[0])
   } 
 
+}
+
+async function startRecording(){
+  statusdiv.innerHTML= 'starting recording'
+    const recorder = await recordAudio();
+    recHolder[0] = recorder
+    nowrecording = true;
+    recorder.start();
+    statusdiv.innerHTML= 'recording now press T to stop recording'
 }
 
 async function stopRecording(recorder){
