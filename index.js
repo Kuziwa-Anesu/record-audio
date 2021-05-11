@@ -29,24 +29,32 @@ const recordAudio = () =>
 const sleep = time => new Promise(resolve => setTimeout(resolve, time));
 let nowrecording = false
 
+const statusdiv=  document.querySelector('.status')
 
 const body = document.querySelector('body');
 let recordings = []
+let recHolder = []
 body.onkeydown =  async (e) => {
   if(!nowrecording && e.code =='KeyR'){
-    console.log('starting recording')
+    statusdiv.innerHTML= 'starting recording'
     const recorder = await recordAudio();
+    recHolder[0] = recorder
     nowrecording = true;
     recorder.start();
-    console.log('recording now')
-    await sleep(7000)
-    console.log('stopping recording..')
-    const audio = await recorder.stop();
-    recordings.push(audio)
-    audio.play();
-    console.log('now playing...')
-    nowrecording = false;
+    statusdiv.innerHTML= 'recording now press T to stop recording'
+       
   }
+  if(nowrecording && e.code =='KeyT'){
+    stopRecording(recHolder[0])
+  } 
+
 }
 
-  
+async function stopRecording(recorder){
+  statusdiv.innerHTML= 'stopping recording..'
+  const audio = await recorder.stop();
+  recordings.push(audio)
+  audio.play();
+  statusdiv.innerHTML= 'now playing...'
+  nowrecording = false;
+}
