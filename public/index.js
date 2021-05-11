@@ -85,7 +85,7 @@ function createHTMLelementforThisRecording(){
   let audioElement = document.createElement('button')
   let indexOfThisRec = parseInt(recordings.length)-1
   audioElement.onclick=() =>{recordings[indexOfThisRec].play()}
-  audioElement.innerText = `play recording ${indexOfThisRec}`
+  audioElement.innerText = `play recording ${indexOfThisRec+1}`
   recordingsHolder.appendChild(audioElement)
   recordingsHolder.appendChild(document.createElement('br'))
 }
