@@ -86,10 +86,31 @@ function createHTMLelementforThisRecording(){
   let indexOfThisRec = parseInt(recordings.length)-1
   audioElement.onclick=() =>{recordings[indexOfThisRec].play()}
   audioElement.innerText = `play recording ${indexOfThisRec+1}`
+  let delete_btn = document.createElement('button')
+  delete_btn.onclick = () =>{recordings.splice(indexOfThisRec,1); refreshRecordings()}
+  delete_btn.innerText = "Delete rec "
   recordingsHolder.appendChild(audioElement)
+  recordingsHolder.appendChild(delete_btn)
   recordingsHolder.appendChild(document.createElement('br'))
 }
 
 
 
 //  every time user finishes a recording you need to make a new button or like an html element that the user can use to play his recording again 
+
+function refreshRecordings(){
+  recordingsHolder.innerHTML =""
+  recordings.forEach((audiorec,index)=>{
+    let audioElement = document.createElement('button')
+    let indexOfThisRec = index
+    audioElement.onclick=() =>{recordings[indexOfThisRec].play()}
+    audioElement.innerText = `play recording ${indexOfThisRec+1}`
+  let delete_btn = document.createElement('button')
+  delete_btn.onclick = () =>{recordings.splice(indexOfThisRec,1); refreshRecordings()}
+  delete_btn.innerText = "Delete rec "
+  recordingsHolder.appendChild(audioElement)
+  recordingsHolder.appendChild(delete_btn)
+  recordingsHolder.appendChild(document.createElement('br'))
+  })
+}
+
