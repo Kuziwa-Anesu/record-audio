@@ -91,6 +91,9 @@ function createHTMLelementforThisRecording(){
   delete_btn.innerText = "Delete rec "
   recordingsHolder.appendChild(audioElement)
   recordingsHolder.appendChild(delete_btn)
+  let convert_to_str_btn = document.createElement('button');
+  recordingsHolder.appendChild(convert_to_str_btn)
+  convert_to_str_btn.onclick = () => {alert("your str is : \n" + makeStrOfAudio(recordings[indexOfThisRec])) }
   recordingsHolder.appendChild(document.createElement('br'))
 }
 
@@ -117,8 +120,16 @@ function refreshRecordings(){
 
 
 function makeStrOfAudio(recording){
-  let b ="";recording.audioBlob.arrayBuffer().then(a =>{console.log(a); b = a})
-  return ab2str(b)
+  let b ="";
+  recording.audioBlob.arrayBuffer()
+  .then(a =>{
+    console.log(a); 
+    b = a
+    b = ab2str(b)
+    alert(b)
+    console.log(b)
+  })
+  
 }
 
 function ab2str(buf) {
@@ -127,7 +138,7 @@ function ab2str(buf) {
 
 
 function makeAudioOfString(audiostr){
-  let c = str2ab(audiostr)
+  let d = str2ab(audiostr)
   let audio2 = document.createElement("audio");
   const blob = new Blob([d], { type: "audio/wav" });
   audio2.src = window.URL.createObjectURL(blob);
