@@ -126,8 +126,9 @@ function makeStrOfAudio(recording){
     console.log(a); 
     b = a
     b = ab2str(b)
-    alert(b)
+    //alert(b)
     console.log(b)
+    return b
   })
   
 }
