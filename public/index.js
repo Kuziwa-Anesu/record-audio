@@ -71,15 +71,47 @@ async function startRecording(){
 }
 
 async function stopRecording(recorder){
-  statusdiv.innerHTML= 'stopping recording..'
+  statusdiv.innerHTML= 'stopping recording..';
   const audio = await recorder.stop();
-  recordings.push(audio)
+  recordings.push(audio);
   audio.play();
   statusdiv.innerHTML= 'now playing...'
   nowrecording = false;
+  // Convert audioBlob to a format that can be sent to the Google API
+  const audioBlob = audio.audioBlob;
+  // Send audioBlob to Google’s Speech-to-Text API
+  const transcription = await sendAudioToGoogleAPI(audioBlob);
+  // Display the transcription result
+  console.log("Transcription: ", transcription);
   sleep(300)
   createHTMLelementforThisRecording()
+  statusdiv.innerHTML = 'Transcription: ' + transcription;
 }
+
+// Helper function to send audio to Google Speech-to-Text API
+async function sendAudioToGoogleAPI(audioBlob) {
+  const formData = new FormData();
+  formData.append('audio', audioBlob);
+
+  try {
+    const response = await fetch('https://us-central1-loyal-framework-435709-m9.cloudfunctions.net/transcribeAUDIO', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data'  // Ensure this matches the Content-Type expected by your function
+      },
+      body: formData,
+    });
+
+    // Ensure that this line is inside the async function
+    const data = await response.json();
+    console.log('Transcription:', data.transcript);
+    return data.transcript;
+  } catch (error) {
+    console.error('Error during transcription:', error);
+  }
+}
+
+
 
 function createHTMLelementforThisRecording(){  
   let audioElement = document.createElement('button')
